@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LawLink AI — Pakistan's Smart Legal Assistant</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.css" />
+    <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
+
+    <style>
+        /* small page padding to avoid nav overlap */
+        body {
+            padding-top: 76px;
+        }
+
+        /* --- CUSTOM COLOR PALETTE --- */
+        /* Primary: Bright Red */
+        .text-law-red {
+            color: #bd1c1c; /* Your selected red */
+        }
+
+        .bg-law-red {
+            background-color: #bd1c1c;
+        }
+
+        /* Secondary: Justice Gold */
+        .text-law-gold {
+            color: #FCD34D; /* Tailwind yellow-400 */
+        }
+
+        .bg-law-gold {
+            background-color: #FCD34D;
+        }
+
+        /* Darker Red for Hover */
+        .hover\:bg-law-red-dark:hover {
+            background-color: #a31818; 
+        }
+
+        /* Gold Hover - Slightly darker gold on hover */
+        .hover\:bg-law-gold-dark:hover {
+            background-color: #FBBF24; /* Tailwind yellow-500 */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900">
+
+    <nav class="bg-gray-900 fixed w-full z-30 top-0 start-0 border-b border-law-gold shadow-2xl">
+        <div class="max-w-screen-xl mx-auto p-4 flex items-center justify-between">
+            <a href="./index.html" class="flex items-center space-x-3">
+                <img src="https://placehold.co/40x40/bd1c1c/FCD34D?text=LL" class="h-10 border-2 border-law-gold rounded-full" alt="LawLink AI Logo">
+                <span class="text-2xl font-extrabold text-white"><span class="text-law-red">LawLink</span> AI</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-6 p-2 rounded-lg bg-gray-800 border border-gray-700">
+                <a href="./index.html" class="text-law-gold font-bold transition hover:text-law-red p-1">Home</a> 
+                <a href="./src/pages/about/about.html" class="text-gray-300 hover:text-law-gold transition p-1">About</a>
+                <a href="./src/pages/services/services.html" class="text-gray-300 hover:text-law-gold transition p-1">Services</a>
+                <a href="./src/pages/contact/contact.html" class="text-gray-300 hover:text-law-gold transition p-1">Contact</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <a href="./src/pages/sign_in/sign_in.html"
+                    class="hidden md:inline text-gray-300 hover:text-law-gold transition px-3 py-1 font-medium">Sign In</a>
+                <a href="./src/pages/sign_up/sign_up.html"
+                    class="hidden md:inline px-4 py-2 bg-law-red text-white rounded-lg font-bold hover:bg-law-red-dark transition shadow-lg border-2 border-transparent hover:border-law-gold">Sign
+                    Up</a>
+
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg border border-gray-700 text-gray-300 hover:text-law-red hover:border-law-red transition"
+                    aria-expanded="false" data-collapse-toggle="mobile-menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+     <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 bg-gray-800 border-t border-gray-700">
+        <a href="#" class="block py-2 text-law-gold font-semibold border-b border-gray-700">Home</a>
+        <a href="./src/pages/about/about.html" class="block py-2 text-gray-300 hover:text-law-red border-b border-gray-700">About</a>
+        <a href="./src/pages/services/services.html" class="block py-2 text-gray-300 dark:text-gray-200 hover:text-law-red border-b border-gray-700">Services</a>
+        <a href="./src/pages/contact/contact.html" class="block py-2 text-gray-300 dark:text-gray-200 hover:text-law-red border-b border-gray-700">Contact</a>
+        <a href="./src/pages/sign_up/sign_up.html"
+            class="block py-2 text-white bg-law-red rounded-md text-center mt-3 hover:bg-law-red-dark font-bold">Sign Up</a>
+        <a href="./src/pages/sign_in/sign_in.html" class="block py-2 text-center mt-2 text-gray-300 hover:text-law-red">Sign In</a>
+    </div>
+    </nav>
+
+    <section class="bg-gray-900 dark:bg-gray-900 pt-10">
+        <div class="max-w-screen-xl mx-auto px-6 grid lg:grid-cols-12 gap-10 items-center py-16 lg:py-24">
+            <div class="lg:col-span-7">
+                <p class="text-law-gold text-lg font-medium mb-3">AI-Powered Justice in Pakistan</p>
+                <h1
+                    class="text-5xl md:text-6xl xl:text-7xl font-extrabold tracking-tight leading-tight text-white">
+                    <span class="text-law-red">LawLink AI</span> – Smart Legal Assistant
+                </h1>
+                <p class="mt-6 max-w-2xl text-xl text-gray-300">
+                    Connecting Pakistani citizens with *verified lawyers* based on case type, location, and budget. Our AI simplifies complex legal understanding, bridging the gap between citizens and justice.
+                </p>
+                <div class="mt-10 flex flex-col sm:flex-row gap-4">
+                    <a href="./src/pages/sign_in/sign_in.html"
+                        class="inline-flex items-center justify-center px-8 py-3 text-lg font-bold text-gray-900 rounded-lg bg-law-gold hover:bg-law-gold-dark transition shadow-xl transform hover:scale-[1.02]">
+                        Find Your Lawyer Now
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                    </a>
+                    <a href="./src/pages/services/services.html"
+                        class="inline-flex items-center justify-center px-8 py-3 text-lg font-medium text-white border-2 border-law-red rounded-lg hover:bg-law-red hover:border-law-red-dark transition shadow-lg">
+                        Explore Our Services
+                    </a>
+                </div>
+            </div>
+
+            <div class="hidden lg:mt-0 lg:col-span-5 lg:flex justify-center">
+                <img src="https://placehold.co/600x450/1F2937/FCD34D?text=AI+Justice+Gavel" alt="Law and AI Visual"
+                    class="rounded-xl shadow-2xl border-4 border-law-gold w-full max-w-md object-cover transform hover:rotate-1 transition duration-500">
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-screen-xl mx-auto px-6 py-16 space-y-16">
+
+        <div id="top-alert">
+            <div class="p-4 rounded-xl bg-law-gold border border-yellow-500 text-gray-900 font-semibold shadow-lg"
+                role="alert">
+                <span class="font-bold">✨ Limited Offer:</span> Receive your first AI Case Summary free when you sign up today!
+            </div>
+        </div>
+
+        <section aria-labelledby="features-heading">
+            <h2 id="features-heading" class="text-4xl font-extrabold text-gray-900 dark:text-white mb-10 text-center">How LawLink AI
+                Empowers Citizens</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <article class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-xl border-t-8 border-law-red transform hover:shadow-2xl transition duration-300">
+                    <div class="inline-flex items-center justify-center h-14 w-14 rounded-full bg-law-red text-law-gold text-2xl">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"></path></svg>
+                    </div>
+                    <h3 class="mt-4 font-bold text-2xl text-gray-900 dark:text-white">AI Case Summaries</h3>
+                    <p class="mt-2 text-base text-gray-600 dark:text-gray-400">Eliminates confusion with clear, concise, and actionable guidance based on Pakistani legal precedent.</p>
+                </article>
+
+                <article class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-xl border-t-8 border-law-gold transform hover:shadow-2xl transition duration-300">
+                    <div class="inline-flex items-center justify-center h-14 w-14 rounded-full bg-law-gold text-gray-900 text-2xl">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h3 class="mt-4 font-bold text-2xl text-gray-900 dark:text-white">Verified Lawyers</h3>
+                    <p class="mt-2 text-base text-gray-600 dark:text-gray-400">Match with a trusted legal professional, verified for specialization, license, and track record.</p>
+                </article>
+
+                <article class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-xl border-t-8 border-law-red transform hover:shadow-2xl transition duration-300">
+                    <div class="inline-flex items-center justify-center h-14 w-14 rounded-full bg-law-red text-law-gold text-2xl">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 2l4 8-4-2-4 2 4-8z"></path></svg>
+                    </div>
+                    <h3 class="mt-4 font-bold text-2xl text-gray-900 dark:text-white">Budget Transparency</h3>
+                    <p class="mt-2 text-base text-gray-600 dark:text-gray-400">See fee estimates up-front to avoid unexpected costs, promoting trust and accessibility.</p>
+                </article>
+            </div>
+        </section>
+
+        <section aria-label="Success stories gallery">
+            <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-8 text-center">Incredible Results, Real People</h2>
+            <div id="gallery-carousel" class="relative" data-carousel="slide">
+                <div class="relative h-72 overflow-hidden rounded-xl md:h-[450px] shadow-2xl">
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="https://placehold.co/1000x450/333333/FCD34D?text=Divorce+Case+Successfully+Settled"
+                            class="absolute block w-full h-full object-cover brightness-75" alt="Client 1">
+                            <p class="absolute bottom-5 left-5 text-2xl font-bold text-white bg-black bg-opacity-50 p-2 rounded">
+                                "Quickly matched with a brilliant family lawyer." - Saima K.
+                            </p>
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="https://placehold.co/1000x450/555555/bd1c1c?text=Property+Dispute+Resolved"
+                            class="absolute block w-full h-full object-cover brightness-75" alt="Client 2">
+                            <p class="absolute bottom-5 left-5 text-2xl font-bold text-white bg-black bg-opacity-50 p-2 rounded">
+                                "Understood my land dispute for the first time." - Raza A.
+                            </p>
+                    </div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="https://placehold.co/1000x450/777777/FCD34D?text=Civil+Litigation+Guidance"
+                            class="absolute block w-full h-full object-cover brightness-75" alt="Client 3">
+                            <p class="absolute bottom-5 left-5 text-2xl font-bold text-white bg-black bg-opacity-50 p-2 rounded">
+                                "The cost transparency was a huge relief." - Fatima N.
+                            </p>
+                    </div>
+                </div>
+                <button type="button"
+                    class="absolute top-1/2 left-4 -translate-y-1/2 bg-white text-gray-900 rounded-full p-3 shadow-lg hover:bg-law-gold hover:text-gray-900 transition"
+                    data-carousel-prev>‹</button>
+                <button type="button"
+                    class="absolute top-1/2 right-4 -translate-y-1/2 bg-white text-gray-900 rounded-full p-3 shadow-lg hover:bg-law-gold hover:text-gray-900 transition"
+                    data-carousel-next>›</button>
+            </div>
+        </section>
+
+        <section class="text-center py-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg border-t-2 border-law-gold">
+            <h2 class="text-3xl font-semibold mb-4 text-gray-900 dark:text-white">Need Quick Legal Clarity?</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">Use the AI Assistant to get a clear, summarized report of your case potential.</p>
+            <button data-modal-target="help-modal" data-modal-show="help-modal"
+                class="px-8 py-3 bg-law-red text-white rounded-lg text-lg font-bold hover:bg-law-red-dark transition shadow-lg"
+                type="button">
+                Start AI Consultation
+            </button>
+
+            <div id="help-modal" tabindex="-1" aria-hidden="true"
+                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+                <div class="relative p-4 w-full max-w-2xl h-full md:h-auto mx-auto mt-20">
+                    <div class="relative bg-white rounded-lg shadow-2xl dark:bg-gray-700 border-t-4 border-law-gold">
+                        <button type="button"
+                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-100 hover:text-gray-900 transition"
+                            data-modal-hide="help-modal">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                        </button>
+                        <div class="p-6 text-center">
+                            <h3 class="mb-5 text-2xl font-bold text-law-red dark:text-law-red">AI Assistant Ready</h3>
+                            <p class="mb-6 text-base text-gray-700 dark:text-gray-300">Enter a brief description of your legal situation to receive a preliminary summary and guidance.</p>
+                            <a href="./src/pages/sign_up/sign_up.html" data-modal-hide="help-modal"
+                                class="px-5 py-2.5 bg-law-gold text-gray-900 font-bold rounded-lg hover:bg-law-gold-dark transition">Proceed to Sign Up</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-gray-900 dark:bg-gray-800 p-6 rounded-xl shadow-xl border border-law-gold">
+            <h2 class="text-2xl font-semibold mb-4 text-white">Terminology Simplified</h2>
+            <p class="text-gray-300">
+                Facing the <span tabindex="0" data-popover-target="popover-term"
+                    class="cursor-pointer font-extrabold text-law-gold underline decoration-dotted hover:no-underline transition">katcheri</span> system can be
+                intimidating for a common citizen. LawLink AI simplifies the jargon so you walk in prepared.
+            </p>
+
+            <div data-popover id="popover-term" role="tooltip"
+                class="absolute z-10 invisible inline-block w-64 text-sm font-normal text-gray-900 transition-opacity duration-300 bg-law-gold border border-law-red rounded-lg shadow-lg p-3">
+                <p><strong>Katcheri</strong>: A common term for a lower court, administrative hearing, or magistrate's
+                    court. Often used to refer to the court complex. *Be prepared!*</p>
+                <div data-popper-arrow></div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-8 text-center">Frequently Asked Questions</h2>
+            <div id="faq-accordion" data-accordion="collapse" class="bg-white dark:bg-gray-800 rounded-xl shadow-xl divide-y dark:divide-gray-700">
+                <h3>
+                    <button type="button"
+                        class="flex justify-between items-center w-full p-5 font-semibold text-left text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                        data-accordion-target="#faq-1" aria-expanded="true" aria-controls="faq-1">
+                        <span class="text-lg">Is the AI advice legally binding?</span>
+                        <svg class="w-5 h-5 text-law-red" data-accordion-icon fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </h3>
+                <div id="faq-1" class="hidden p-5 border-t dark:border-gray-700">
+                    <p class="text-gray-600 dark:text-gray-400">No. The AI provides preliminary information and guidance based on public Pakistani law data. It is not a substitute for professional legal counsel. Always consult a verified lawyer for specific advice.</p>
+                </div>
+
+                <h3>
+                    <button type="button"
+                        class="flex justify-between items-center w-full p-5 font-semibold text-left text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                        data-accordion-target="#faq-2" aria-expanded="false" aria-controls="faq-2">
+                        <span class="text-lg">How are lawyers verified on your platform?</span>
+                        <svg class="w-5 h-5 text-law-red" data-accordion-icon fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </h3>
+                <div id="faq-2" class="hidden p-5 border-t dark:border-gray-700">
+                    <p class="text-gray-600 dark:text-gray-400">We require active bar council registration, perform ID
+                        verification, and vet specialization credentials to ensure quality and trust. We prioritize your safety.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Explore Key Features</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl">
+                <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b dark:border-gray-700"
+                    id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                    <li class="me-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 rounded-t-lg font-bold text-law-red border-law-red transition hover:border-law-red-dark" id="profile-tab"
+                            data-tabs-target="#tab-match" type="button" role="tab" aria-controls="tab-match"
+                            aria-selected="true">Lawyer Match</button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-law-red hover:border-law-red transition dark:hover:text-law-red"
+                            id="dashboard-tab" data-tabs-target="#tab-summary" type="button" role="tab"
+                            aria-controls="tab-summary" aria-selected="false">AI Summary</button>
+                    </li>
+                </ul>
+                <div id="default-tab-content">
+                    <div class="p-5 rounded-b-xl dark:bg-gray-800" id="tab-match" role="tabpanel"
+                        aria-labelledby="profile-tab">
+                        <p class="text-gray-600 dark:text-gray-400">We match you to verified lawyers by specialization,
+                            location, and preferred fee range, ensuring you find the right fit quickly. *Filter by budget and location.*</p>
+                    </div>
+                    <div class="hidden p-5 rounded-b-xl dark:bg-gray-800" id="tab-summary" role="tabpanel"
+                        aria-labelledby="dashboard-tab">
+                        <p class="text-gray-600 dark:text-gray-400">The AI Assistant provides you with a clear, preliminary
+                            understanding of your legal standing based on Pakistani jurisprudence. *Get clarity before the court visit.*</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-l-8 border-law-red">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Success Metrics & Trust</h2>
+            <div class="w-full bg-gray-200 rounded-full h-3 dark:bg-gray-700">
+                <div class="bg-law-gold h-3 rounded-full" style="width: 85%"></div>
+            </div>
+            <div class="flex justify-between mt-2">
+                <span class="text-base font-bold text-law-red">85% Client Satisfaction</span>
+                <span class="text-sm font-medium text-gray-500">Target: 100% Excellence</span>
+            </div>
+        </section>
+
+        <section class="bg-gray-900 dark:bg-gray-900 p-10 rounded-xl shadow-2xl border-t-8 border-law-gold">
+            <figure class="max-w-screen-md mx-auto text-center">
+                <svg class="w-10 h-10 mx-auto mb-4 text-law-gold" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14"><path d="M6 31a7 7 0 0 1-7-7v-6a7 7 0 0 1 7-7h1a7 7 0 0 1 7 7v6a7 7 0 0 1-7 7H6zm11 0a7 7 0 0 1-7-7v-6a7 7 0 0 1 7-7h1a7 7 0 0 1 7 7v6a7 7 0 0 1-7 7h-1z" /></svg>
+                <blockquote>
+                    <p class="text-2xl font-medium italic text-gray-100">"LawLink AI is a revolution. The *transparency and speed* of finding a verified lawyer were unmatched. Highly recommend for any citizen in Pakistan."</p>
+                </blockquote>
+                <figcaption class="flex items-center justify-center mt-6 space-x-3">
+                    <div class="flex items-center divide-x-2 divide-gray-500">
+                        <cite class="pe-3 font-bold text-law-gold">Imran S.</cite>
+                        <cite class="ps-3 text-sm font-light text-gray-400">Property Client, Lahore</cite>
+                    </div>
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-6">Popular Legal Practice Areas</h2>
+            <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow-xl">
+                <table class="w-full text-left text-base text-gray-500 dark:text-gray-400">
+                    <thead class="text-sm text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
+                        <tr>
+                            <th class="px-6 py-3">Practice Area</th>
+                            <th class="px-6 py-3">Avg. Fee (PKR)</th>
+                            <th class="px-6 py-3">Lawyers Available</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Family Law</td>
+                            <td class="px-6 py-4">15,000</td>
+                            <td class="px-6 py-4 text-law-red font-bold">120+</td>
+                        </tr>
+                        <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Property Disputes</td>
+                            <td class="px-6 py-4">25,000</td>
+                            <td class="px-6 py-4 text-law-red font-bold">85+</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Civil Litigation</td>
+                            <td class="px-6 py-4">20,000</td>
+                            <td class="px-6 py-4 text-law-red font-bold">60+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="flex justify-center pt-8">
+            <nav aria-label="Page navigation example">
+                <ul class="inline-flex -space-x-px text-sm shadow-md rounded-lg overflow-hidden">
+                    <li><a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-law-red dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 transition">Previous</a></li>
+                    <li><a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-law-red dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 transition">1</a></li>
+                    <li><a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-white bg-law-red border border-law-red hover:bg-law-red-dark transition">2</a></li>
+                    <li><a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-law-red dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 transition">3</a></li>
+                    <li><a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-law-red dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 transition">Next</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <section class="bg-law-red p-12 rounded-2xl text-white shadow-2xl dark:bg-red-900 transform hover:scale-[1.005] transition duration-300">
+            <h2 class="text-3xl font-bold mb-4">Stay Informed on Legal Updates</h2>
+            <p class="mb-6 text-lg font-light">Subscribe to our exclusive newsletter for the latest legal news and platform features.</p>
+            <form class="flex flex-col sm:flex-row gap-4">
+                <input type="email" placeholder="Enter your email address..." required
+                    class="p-4 flex-grow rounded-lg text-gray-900 border-2 border-white focus:ring-law-gold focus:border-law-gold transition shadow-inner" style="outline-color: #FCD34D;">
+                <button type="submit" class="p-4 bg-law-gold text-gray-900 font-bold rounded-lg hover:bg-law-gold-dark transition shadow-lg">Subscribe Now</button>
+            </form>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-900 border-t mt-12 dark:bg-gray-900 dark:border-gray-700">
+        <div class="max-w-screen-xl mx-auto px-6 py-10 grid md:grid-cols-4 gap-8">
+            <div class="md:col-span-2">
+                <a href="./index.html" class="flex items-center space-x-3">
+                    <img src="https://placehold.co/40x40/bd1c1c/FCD34D?text=LL" class="h-10 border border-law-gold rounded-md" alt="LawLink AI Logo">
+                    <span class="font-bold text-xl text-law-red dark:text-white">LawLink AI</span>
+                </a>
+                <p class="mt-4 text-sm text-gray-400 max-w-sm">Making justice accessible — AI-guided legal help and verified lawyers across Pakistan.</p>
+            </div>
+
+            <div>
+                <h4 class="font-semibold mb-3 text-law-gold">Explore</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="./src/pages/about/about.html" class="hover:text-law-red transition">About Us</a></li>
+                    <li><a href="./src/pages/services/services.html" class="hover:text-law-red transition">Our Services</a></li>
+                    <li><a href="./src/pages/contact/contact.html" class="hover:text-law-red transition">Contact</a></li>
+                    
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-semibold mb-3 text-law-gold">Legal & Auth</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#" class="hover:text-law-red transition">Privacy Policy</a></li>
+                    <li><a href="./src/pages/sign_up/sign_up.html" class="hover:text-law-red transition">Sign Up</a></li>
+                    <li><a href="./src/pages/sign_up/sign_up.html" class="hover:text-law-red transition">Sign In</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t py-4 dark:border-gray-700">
+            <div class="max-w-screen-xl mx-auto px-6 flex flex-col sm:flex-row justify-between text-sm text-gray-500 dark:text-gray-400">
+                <span>© 2025 LawLink AI. All Rights Reserved.</span>
+                <span>Designed with <span class="text-law-red">❤</span> • Transparency First</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true' || false;
+                    menuBtn.setAttribute('aria-expanded', !isExpanded);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

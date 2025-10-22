@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | LawLink AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <style>
+        /* --- CUSTOM COLOR PALETTE (From Homepage) --- */
+        /* Primary: Bright Red */
+        .text-law-red {
+            color: #bd1c1c; /* Your selected red */
+        }
+
+        .bg-law-red {
+            background-color: #bd1c1c;
+        }
+
+        /* Secondary: Justice Gold */
+        .text-law-gold {
+            color: #FCD34D; /* Tailwind yellow-400 */
+        }
+
+        .bg-law-gold {
+            background-color: #FCD34D;
+        }
+
+        /* Darker Red for Hover */
+        .hover\:bg-law-red-dark:hover {
+            background-color: #a31818; 
+        }
+
+        /* Gold Hover - Slightly darker gold on hover */
+        .hover\:bg-law-gold-dark:hover {
+            background-color: #FBBF24; /* Tailwind yellow-500 */
+        }
+        
+        /* Consistent dark mode background and transition */
+        .dark .bg-gray-900 { background-color: #111827; } 
+        .dark .bg-gray-800 { background-color: #1F2937; }
+
+        /* Center the content vertically and horizontally */
+        .auth-container {
+            min-height: 100vh;
+            padding: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 font-sans">
+
+    <header class="pt-8 fixed top-0 w-full z-10 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <a href="../../../index.html" class="flex items-center justify-center space-x-3 rtl:space-x-reverse transition-colors">
+                <img src="https://placehold.co/40x40/bd1c1c/FCD34D?text=LL" class="h-8 border border-law-gold rounded-full" alt="LawLink AI Logo"
+                    onerror="this.onerror=null; this.src='https://placehold.co/40x40/bd1c1c/FCD34D?text=LL';">
+                <span class="self-center text-xl font-extrabold whitespace-nowrap dark:text-white text-law-red">LawLink AI</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="auth-container">
+        <section class="w-full max-w-md mx-auto p-8 bg-white dark:bg-gray-800 rounded-xl shadow-2xl space-y-6 border-t-4 border-law-red">
+
+            <div class="text-center space-y-2 pt-4">
+                <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white">Sign In to <span class="text-law-red">LawLink AI</span></h1>
+                <p class="text-gray-500 dark:text-gray-400">Welcome back! Access your legal case dashboard.</p>
+            </div>
+
+            <form action="https://formspree.io/f/xpwyndzg" method="POST" class="space-y-6">
+                <div>
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                                <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.98 1.98 0 0 0 .717.278l9.248 7.79Z"/>
+                                <path d="M2 16h16c.55 0 1-.448 1-.998V.998c0-.55-.45-1-.999-1h-16c-.55 0-1 .448-1 .998v14.004c0 .55.45 1 .999 1Z"/>
+                            </svg>
+                        </div>
+                        <input type="email" name="email" id="email"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-law-gold focus:border-law-gold block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-law-gold dark:focus:border-law-gold"
+                            placeholder="name@company.com" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                <path d="M14 7h-2.126A4.14 4.14 0 0 0 10 3.868V2a1 1 0 0 0-2 0v1.868a4.14 4.14 0 0 0-1.874 3.132H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Zm-1.874 12A2.14 2.14 0 0 1 10 16a2 2 0 0 1-2-2.126h2a2.14 2.14 0 0 1 1.874 3.126Z"/>
+                            </svg>
+                        </div>
+                        <input type="password" name="password" id="password" placeholder="••••••••"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-law-gold focus:border-law-gold block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-law-gold dark:focus:border-law-gold"
+                            required>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            <input id="remember" type="checkbox" name="remember_me" value="true" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-law-red text-law-red dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-law-red dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" />
+                        </div>
+                        <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
+                    </div>
+
+                    <a href="#" class="text-sm text-law-red hover:text-law-gold transition">Forgot Password?</a>
+                </div>
+
+                <button type="submit"
+                    class="w-full text-white bg-law-red hover:bg-law-red-dark focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-lg px-5 py-2.5 text-center dark:bg-law-red dark:hover:bg-law-red-dark dark:focus:ring-red-800 transition flex items-center justify-center space-x-2 shadow-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3v-1a3 3 0 013-3h7.586a1 1 0 01.707.293l4.586 4.586a1 1 0 010 1.414l-4.586 4.586a1 1 0 01-.707.293H14a3 3 0 01-3-3z"></path></svg>
+                    <span>Sign In</span>
+                </button>
+
+                <div class="relative flex items-center py-5">
+                    <div class="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+                    <span class="flex-shrink mx-4 text-gray-400 text-sm">Or</span>
+                    <div class="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+                </div>
+
+                <p class="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
+                    Don't have an account? <a href="../sign_up/sign_up.html" class="font-bold text-law-red hover:text-law-gold transition">Sign up</a>
+                </p>
+            </form>
+        </section>
+    </div>
+
+    <footer class="text-center py-4 text-sm text-gray-500 dark:text-gray-400">
+        © 2025 LawLink AI | <a href="../../../index.html" class="hover:text-law-red transition">Back to Home</a>
+    </footer>
+
+</body>
+</html>
