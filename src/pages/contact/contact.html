@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact LawLink AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/x-icon" href="../../../assets/favicon.ico">
+    <script type="module" src="../../../utils/themeutils.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <style>
         /* --- CUSTOM COLOR PALETTE (From Homepage) --- */
@@ -64,9 +66,18 @@
                 <a href="../about/about.html" class="hover:text-law-gold transition-colors p-1">About</a>
                 <a href="../services/services.html" class="hover:text-law-gold transition-colors p-1">Services</a>
                 <a href="./contact.html" class="text-law-gold font-semibold transition-colors p-1">Contact</a>
+                <a href="../search_lawyers/lawyers.html" class="hover:text-law-gold transition-colors p-1">Search Lawyers</a>
             </div>
 
             <div class="flex items-center space-x-3 md:order-2">
+                <button type="button" id="toggleTheme"
+                    class="inline-flex items-center px-3 py-2 rounded-lg text-law-gold hover:text-white dark:text-law-gold dark:hover:text-law-red transition duration-300 border border-law-gold hover:bg-law-red-dark dark:hover:bg-law-red-dark shadow-md"
+                    aria-label="Toggle Dark Mode">
+                    <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M17.293 13.929a1 1 0 00-1.414-1.414A5 5 0 0110 12V4a1 1 0 10-2 0v8a7 7 0 109.899 9.899 1 1 0 00-1.414-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-sm font-semibold hidden lg:inline">Dark Mode</span>
+                </button>
                 <a href="../sign_in/sign_in.html" class="hidden md:inline text-gray-300 hover:text-law-gold transition-colors font-medium">Sign In</a>
                 <a href="../sign_up/sign_up.html"
                     class="hidden md:inline px-5 py-2 bg-law-red text-white rounded-lg hover:bg-law-red-dark font-bold transition-colors shadow-lg border-2 border-transparent hover:border-law-gold">Sign Up</a>
@@ -82,6 +93,17 @@
             
             <div class="items-center justify-between hidden w-full md:hidden bg-gray-800 border-t border-gray-700" id="navbar-sticky">
                 <ul class="flex flex-col p-4 font-medium text-gray-300">
+                    <div class="py-3 flex items-center justify-between border-b border-gray-700">
+                        <span class="text-gray-300 font-semibold">Toggle Theme</span>
+                        <button type="button" id="toggleThemeMobile"
+                            class="inline-flex items-center px-3 py-2 rounded-lg bg-gray-700 text-law-gold hover:bg-gray-600 transition"
+                            aria-label="Toggle Dark Mode">
+                            <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M17.293 13.929a1 1 0 00-1.414-1.414A5 5 0 0110 12V4a1 1 0 10-2 0v8a7 7 0 109.899 9.899 1 1 0 00-1.414-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm font-semibold">Dark Mode</span>
+                        </button>
+                    </div>
                     <li><a href="../../index.html" class="block py-2 hover:text-law-gold transition-colors border-b border-gray-700">Home</a></li>
                     <li><a href="../about/about.html" class="block py-2 hover:text-law-gold transition-colors border-b border-gray-700">About</a></li>
                     <li><a href="../services/services.html" class="block py-2 hover:text-law-gold transition-colors border-b border-gray-700">Services</a></li>
@@ -259,6 +281,7 @@
                     <li><a href="../about/about.html" class="hover:text-law-red transition-colors">About Us</a></li>
                     <li><a href="../services/services.html" class="hover:text-law-red transition-colors">Services</a></li>
                     <li><a href="./contact.html" class="hover:text-law-red transition-colors">Contact Sales</a></li>
+                    <li><a href="../search_lawyers/lawyers.html" class="hover:text-law-red transition-colors">Search Lawyers</a></li>
                 </ul>
             </div>
 
@@ -304,7 +327,18 @@
                     dropdownSelection.textContent = value;
                     inquiryTypeInput.value = value;
                     // Close the dropdown (Flowbite handles the visual close via its logic)
-                    document.getElementById('inquiryDropdownButton').click();
+                    // Note: Since data-dropdown-toggle is on the button, this click simulation is used for closing after selection
+                    const dropdownButton = document.getElementById('inquiryDropdownButton');
+                    if (dropdownButton) {
+                        // Using Flowbite's official mechanism if available, or just simulating a click to toggle off
+                        const flowbiteInstance = Flowbite.getInstance(dropdownButton);
+                        if (flowbiteInstance && typeof flowbiteInstance.hide === 'function') {
+                            flowbiteInstance.hide();
+                        } else {
+                            // Fallback if Flowbite's JS API isn't easy to access
+                            dropdownButton.click();
+                        }
+                    }
                 });
             });
 

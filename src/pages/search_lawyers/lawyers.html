@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LawLink AI: Verified Lawyers CRUD</title>
+    <script type="module" src="../../../utils/themeutils.js"></script>
+    <link rel="icon" type="image/x-icon" href="../../../assets/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Consistent padding and color scheme */
+        body { padding-top: 76px; } /* Space for the fixed navbar */
+        
+        /* --- CUSTOM COLOR PALETTE (From Services Page) --- */
+        /* Primary: Bright Red */
+        .text-law-red { color: #bd1c1c; } 
+        .bg-law-red { background-color: #bd1c1c; }
+
+        /* Secondary: Justice Gold */
+        .text-law-gold { color: #FCD34D; } /* Tailwind yellow-400 */
+        .bg-law-gold { background-color: #FCD34D; }
+
+        /* Darker Red for Hover */
+        .hover\:bg-law-red-dark:hover { background-color: #a31818; }
+        .hover\:text-law-red-dark:hover { color: #a31818; }
+
+        /* Gold Hover - Slightly darker gold on hover */
+        .hover\:bg-law-gold-dark:hover { background-color: #FBBF24; } /* Tailwind yellow-500 */
+        
+        /* Consistent dark mode background and transition */
+        .dark .bg-gray-900 { background-color: #111827; } 
+        .dark .bg-gray-800 { background-color: #1F2937; }
+        .transition-colors { transition: color 0.2s, background-color 0.2s, border-color 0.2s; }
+
+        /* Specific styles for this page (Lawyer CRUD) */
+        /* Increased shadow strength for visual appeal */
+        .card-shadow { box-shadow: 0 10px 20px -5px rgba(189, 28, 28, 0.15), 0 4px 6px -2px rgba(189, 28, 28, 0.08); }
+        .dark .card-shadow { box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1); }
+
+        /* Modal backdrop for visual focus */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Darker backdrop */
+            z-index: 40;
+            display: none; /* Controlled by JS */
+        }
+
+        /* Improved card hover effect */
+        .lawyer-card:hover {
+            transform: translateY(-4px);
+            border-color: #FCD34D; /* Highlight border on hover */
+        }
+        
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen font-sans transition-colors">
+
+    <nav class="bg-gray-900 fixed w-full z-30 top-0 start-0 border-b border-law-gold shadow-2xl">
+        <div class="max-w-screen-xl mx-auto p-4 flex items-center justify-between">
+            <a href="../../../index.html" class="flex items-center space-x-3 transition-colors">
+                <img src="https://placehold.co/40x40/bd1c1c/FCD34D?text=LL" class="h-10 border-2 border-law-gold rounded-full" alt="LawLink AI Logo" onerror="this.onerror=null; this.src='https://placehold.co/40x40/bd1c1c/FCD34D?text=LL';">
+                <span class="text-2xl font-extrabold text-white"><span class="text-law-red">LawLink</span> AI</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-6 p-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-300">
+                <a href="../../../index.html" class="hover:text-law-gold transition-colors p-1">Home</a>
+                <a href="../about/about.html" class="hover:text-law-gold transition-colors p-1">About</a>
+                <a href="../services/services.html" class="hover:text-law-gold transition-colors p-1">Services</a>
+                <a href="../contact/contact.html" class="hover:text-law-gold transition-colors p-1">Contact</a>
+                <a href="../search_lawyers/lawyers.html" class="text-law-gold font-semibold transition-colors p-1">Search Lawyers</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <button type="button" id="toggleTheme"
+                    class="inline-flex items-center px-3 py-2 rounded-lg text-law-gold hover:text-white dark:text-law-gold dark:hover:text-law-red transition duration-300 border border-law-gold hover:bg-law-red-dark dark:hover:bg-law-red-dark shadow-md"
+                    aria-label="Toggle Dark Mode">
+                    <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M17.293 13.929a1 1 0 00-1.414-1.414A5 5 0 0110 12V4a1 1 0 10-2 0v8a7 7 0 109.899 9.899 1 1 0 00-1.414-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-sm font-semibold hidden lg:inline">Dark Mode</span>
+                </button>
+                <a href="../sign_up/sign_up.html" class="hidden md:inline text-gray-300 hover:text-law-gold transition-colors font-medium">Sign In</a>
+                <a href="../sign_in/sign_in.html"
+                    class="hidden md:inline px-5 py-2 bg-law-red text-white rounded-lg hover:bg-law-red-dark font-bold transition-colors shadow-lg border-2 border-transparent hover:border-law-gold">Sign Up</a>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg border border-gray-700 text-gray-300 hover:text-law-red hover:border-law-red transition" aria-expanded="false">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 bg-gray-800 border-t border-gray-700 text-gray-300">
+            <div class="py-3 flex items-center justify-between border-b border-gray-700">
+                <span class="text-gray-300 font-semibold">Toggle Theme</span>
+                <button type="button" id="toggleThemeMobile"
+                    class="inline-flex items-center px-3 py-2 rounded-lg bg-gray-700 text-law-gold hover:bg-gray-600 transition"
+                    aria-label="Toggle Dark Mode">
+                    <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M17.293 13.929a1 1 0 00-1.414-1.414A5 5 0 0110 12V4a1 1 0 10-2 0v8a7 7 0 109.899 9.899 1 1 0 00-1.414-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-sm font-semibold">Dark Mode</span>
+                </button>
+            </div>
+            <a href="../../index.html" class="block py-2 hover:text-law-gold transition-colors border-b border-gray-700">Home</a>
+            <a href="../about/about.html" class="block py-2 hover:text-law-gold transition-colors border-b border-gray-700">About</a>
+            <a href="../services/services.html" class="block py-2 hover:text-law-gold transition-colors border-b border-gray-700">Services</a>
+            <a href="../contact/contact.html" class="block py-2 hover:text-law-gold transition-colors border-b border-gray-700">Contact</a>
+            <a href="../sign_up/sign_up.html" class="block py-2 text-white bg-law-red hover:bg-law-red-dark rounded-md text-center mt-3 font-bold transition-colors">Sign Up</a>
+            <a href="../sign_in/sign_in.html" class="block py-2 text-center mt-2 hover:text-law-gold transition-colors">Sign In</a>
+        </div>
+    </nav>
+    <header class="bg-gray-900 dark:bg-gray-900 py-12 transition-colors border-b-4 border-law-red">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">
+                <span class="text-law-gold">Dashboard:</span> Verified Lawyers <span class="text-law-red">CRUD</span>
+            </h1>
+            <p class="text-lg text-gray-400 max-w-4xl mx-auto">
+                Manage and update the central database of legal professionals in real-time.
+            </p>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto p-8 space-y-10">
+
+        <section class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-t-4 border-law-gold transition-colors transform hover:shadow-2xl duration-300">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white flex items-center space-x-2">
+                <svg class="w-6 h-6 text-law-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <span>Search & Filter Lawyers</span>
+            </h2>
+            <div class="grid md:grid-cols-6 gap-4">
+                <input type="text" id="searchInput" placeholder="Search by Name or Bar ID..." 
+                        class="md:col-span-2 p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-red focus:border-law-red transition">
+                
+                <select id="cityFilter" class="p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-red focus:border-law-red transition">
+                    <option value="">City (All)</option>
+                    <option value="Lahore">Lahore</option>
+                    <option value="Karachi">Karachi</option>
+                    <option value="Islamabad">Islamabad</option>
+                </select>
+                
+                <select id="specialtyFilter" class="p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-red focus:border-law-red transition">
+                    <option value="">Specialty (All)</option>
+                    <option value="Family">Family Law</option>
+                    <option value="Property">Property Disputes</option>
+                    <option value="Civil">Civil Litigation</option>
+                    <option value="Corporate">Corporate Law</option>
+                </select>
+
+                <select id="ratingFilter" class="p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-red focus:border-law-red transition">
+                    <option value="">Min. Rating (All)</option>
+                    <option value="4">4 Stars & Up</option>
+                    <option value="3">3 Stars & Up</option>
+                </select>
+
+                <select id="feeFilter" class="p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-red focus:border-law-red transition">
+                    <option value="">Fee Range (All)</option>
+                    <option value="low">Low (< PKR 15k)</option>
+                    <option value="high">High (> PKR 20k)</option>
+                </select>
+            </div>
+        </section>
+
+
+        <section class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-colors border-t-4 border-law-red transform hover:shadow-2xl duration-300">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white flex items-center space-x-2">
+                <svg class="w-6 h-6 text-law-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                <span>Add New Lawyer</span>
+            </h2>
+            <form id="addLawyerForm" class="grid sm:grid-cols-3 gap-4">
+                <input type="text" id="newName" placeholder="Full Name" required 
+                        class="p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-red focus:border-law-red transition">
+                <input type="text" id="newSpecialty" placeholder="Specialty (e.g., Family, Civil)" required 
+                        class="p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-red focus:border-law-red transition">
+                <input type="text" id="newCity" placeholder="City (e.g., Lahore)" required 
+                        class="p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-red focus:border-law-red transition">
+                <input type="number" id="newFee" placeholder="Fee (PKR) - e.g., 20000" required 
+                        class="p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-red focus:border-law-red transition">
+                <input type="number" id="newRating" placeholder="Rating (1.0 - 5.0)" required min="1" max="5" step="0.1"
+                        class="p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-red focus:border-law-red transition">
+                <button type="submit" 
+                        class="bg-law-red text-white font-bold py-3 rounded-lg hover:bg-law-red-dark transition shadow-lg transform hover:scale-[1.01] duration-300">
+                        Add Lawyer
+                </button>
+            </form>
+        </section>
+
+        <section>
+            <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white flex items-center space-x-2">
+                <svg class="w-7 h-7 text-law-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>Verified Lawyers List</span>
+            </h2>
+            <div id="lawyerCardsContainer" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                </div>
+            <div id="noResults" class="hidden text-center text-xl text-gray-500 mt-10 p-8 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl">
+                No lawyers match the current filter criteria.
+            </div>
+        </section>
+
+    </main>
+    
+    <div id="editModal" class="modal-backdrop hidden fixed inset-0 z-50 flex items-center justify-center">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-md transform transition-all duration-300 scale-95 opacity-0" id="modalContent">
+            <h3 class="text-2xl font-bold mb-6 text-law-red border-b pb-2">Edit Lawyer Details</h3>
+            <form id="editLawyerForm" class="space-y-4">
+                <input type="hidden" id="editId">
+                <div>
+                    <label for="editName" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Name</label>
+                    <input type="text" id="editName" required class="w-full p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-gold focus:border-law-gold mt-1 transition">
+                </div>
+                <div>
+                    <label for="editSpecialty" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Specialty</label>
+                    <input type="text" id="editSpecialty" required class="w-full p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-gold focus:border-law-gold mt-1 transition">
+                </div>
+                <div>
+                    <label for="editCity" class="block text-sm font-medium text-gray-700 dark:text-gray-200">City</label>
+                    <input type="text" id="editCity" required class="w-full p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-gold focus:border-law-gold mt-1 transition">
+                </div>
+                <div>
+                    <label for="editFee" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Fee (PKR)</label>
+                    <input type="number" id="editFee" required class="w-full p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-gold focus:border-law-gold mt-1 transition">
+                </div>
+                <div>
+                    <label for="editRating" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Rating (1-5)</label>
+                    <input type="number" id="editRating" required min="1" max="5" step="0.1" class="w-full p-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-law-gold focus:border-law-gold mt-1 transition">
+                </div>
+                <div class="flex justify-end space-x-3 pt-4">
+                    <button type="button" id="cancelEditBtn" class="px-5 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition dark:text-gray-300 dark:hover:bg-gray-700">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-law-gold text-gray-900 font-bold rounded-lg hover:bg-law-gold-dark transition shadow-md">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer class="bg-gray-900 border-t border-gray-700 mt-12 transition-colors">
+        <div class="max-w-screen-xl mx-auto px-6 py-10 grid md:grid-cols-4 gap-8">
+            <div class="md:col-span-1">
+                <a href="../../index.html" class="flex items-center space-x-3">
+                    <img src="https://placehold.co/40x40/bd1c1c/FCD34D?text=LL" class="h-10 border-2 border-law-gold rounded-full" alt="LawLink AI Logo" onerror="this.onerror=null; this.src='https://placehold.co/40x40/bd1c1c/FCD34D?text=LL';">
+                    <span class="font-bold text-law-red dark:text-white">LawLink AI</span>
+                </a>
+                <p class="mt-4 text-sm text-gray-400 max-w-sm">Making justice accessible — AI-guided legal help and verified
+                    lawyers across Pakistan.</p>
+            </div>
+
+            <div>
+                <h4 class="font-semibold mb-3 text-law-gold">Product</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="../services/services.html" class="hover:text-law-red transition-colors">AI Assistant</a></li>
+                    <li><a href="#" class="hover:text-law-red transition-colors">Lawyer Directory</a></li>
+                    <li><a href="../services/services.html" class="hover:text-law-red transition-colors">Pro Match</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-semibold mb-3 text-law-gold">Company</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="../about/about.html" class="hover:text-law-red transition-colors">About Us</a></li>
+                    <li><a href="../services/services.html" class="hover:text-law-red transition-colors">Services</a></li>
+                    <li><a href="../contact/contact.html" class="hover:text-law-red transition-colors">Contact Sales</a></li>
+                    <li><a href="../search_lawyers/lawyers.html" class="hover:text-law-red transition-colors">Search Lawyers</a>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-semibold mb-3 text-law-gold">Legal</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#" class="hover:text-law-red transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-law-red transition-colors">Terms of Service</a></li>
+                    <li><a href="../sign_in/sign_in.html" class="hover:text-law-red transition-colors">sign_in</a>
+                    <li><a href="../sign_up/sign_up.html" class="hover:text-law-red transition-colors">sign_up</a>
+                </ul>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 py-4">
+            <div class="max-w-screen-xl mx-auto px-6 flex flex-col md:flex-row justify-between text-sm text-gray-500 dark:text-gray-400">
+                <span>© <span id="year-footer"></span> LawLink AI • All rights reserved.</span>
+                <span class="mt-2 md:mt-0">Designed with <span class="text-law-red">❤</span> in Pakistan</span>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Set footer year and mobile menu logic
+        document.getElementById('year-footer').textContent = new Date().getFullYear();
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn?.addEventListener('click', () => {
+            const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+            menuBtn.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+    </script>
+    
+    <script>
+        // lawyer-crud.js
+        // The entire content of your lawyer-crud.js file is placed here to be self-contained and ensure perfect execution.
+
+        // Step 1: Create an Array of Objects
+        let lawyers = [
+            { id: 1, name: "Ahmed Khan", specialty: "Family", city: "Lahore", fee: 18000, rating: 4.5, barId: "PK-LHR-2015" },
+            { id: 2, name: "Saima Bibi", specialty: "Property", city: "Karachi", fee: 25000, rating: 4.8, barId: "PK-KHI-2008" },
+            { id: 3, name: "Ali Raza", specialty: "Civil", city: "Islamabad", fee: 14000, rating: 3.9, barId: "PK-ISB-2019" },
+            { id: 4, name: "Fatima Noor", specialty: "Corporate", city: "Lahore", fee: 32000, rating: 4.2, barId: "PK-LHR-2010" },
+            { id: 5, name: "Zahid Qureshi", specialty: "Family", city: "Karachi", fee: 15000, rating: 4.0, barId: "PK-KHI-2012" },
+            { id: 6, name: "Maria Hassan", specialty: "Civil", city: "Lahore", fee: 21000, rating: 3.5, barId: "PK-LHR-2020" }
+        ];
+
+        const cardsContainer = document.getElementById('lawyerCardsContainer');
+        let nextId = lawyers.length > 0 ? Math.max(...lawyers.map(l => l.id)) + 1 : 1;
+
+        // Function to render the star rating
+        function renderRating(rating) {
+            const fullStars = Math.floor(rating);
+            let stars = '';
+            for (let i = 0; i < 5; i++) {
+                if (i < fullStars) {
+                    stars += '<span class="text-law-gold">★</span>'; 
+                } else if (i === fullStars && rating % 1 !== 0) {
+                    stars += '<span class="text-law-gold">½</span>'; 
+                } else {
+                    stars += '<span class="text-gray-300 dark:text-gray-600">★</span>'; 
+                }
+            }
+            return `<div class="text-lg">${stars} (${rating.toFixed(1)})</div>`; 
+        }
+
+        // Step 2: Display Array of Objects on Webpage (R in CRUD)
+        function renderLawyerCards(lawyerList) {
+            cardsContainer.innerHTML = ''; // Clear previous content
+            
+            if (lawyerList.length === 0) {
+                document.getElementById('noResults').classList.remove('hidden');
+                return;
+            } else {
+                document.getElementById('noResults').classList.add('hidden');
+            }
+
+            lawyerList.map(lawyer => {
+                // Create card element
+                const card = document.createElement('div');
+                // Added lawyer-card class and transition for improved hover effect
+                card.classList.add('lawyer-card', 'bg-white', 'dark:bg-gray-800', 'p-6', 'rounded-xl', 'shadow-lg', 'border-t-4', 'border-law-red', 'card-shadow', 'space-y-3', 'transition', 'duration-300');
+
+                card.innerHTML = `
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">${lawyer.name}</h3>
+                    <p class="text-lg text-law-red font-semibold">${lawyer.specialty} Specialist</p>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        <span class="font-bold">City:</span> ${lawyer.city}
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        <span class="font-bold">Avg. Fee:</span> PKR ${lawyer.fee.toLocaleString()}
+                    </p>
+                    ${renderRating(lawyer.rating)}
+                    <p class="text-sm text-gray-500 dark:text-gray-500">Bar ID: ${lawyer.barId}</p>
+
+                    <div class="flex space-x-3 pt-3 border-t border-gray-100 dark:border-gray-700">
+                        <button data-id="${lawyer.id}" class="edit-btn px-4 py-2 bg-law-gold text-gray-900 rounded-lg font-medium hover:bg-law-gold-dark transition shadow-md">
+                            Edit
+                        </button>
+                        <button data-id="${lawyer.id}" class="delete-btn px-4 py-2 bg-law-red text-white rounded-lg font-medium hover:bg-law-red-dark transition shadow-md">
+                            Delete
+                        </button>
+                    </div>
+                `;
+                cardsContainer.appendChild(card);
+            });
+
+            // Re-attach event listeners for delete and edit buttons
+            attachEventListeners();
+        }
+
+        // --- CRUD Operations Handlers ---
+
+        // Step 3: Add New Object (C in CRUD)
+        document.getElementById('addLawyerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newLawyer = {
+                id: nextId++,
+                name: document.getElementById('newName').value.trim(),
+                specialty: document.getElementById('newSpecialty').value.trim(),
+                city: document.getElementById('newCity').value.trim(),
+                fee: parseInt(document.getElementById('newFee').value),
+                rating: parseFloat(document.getElementById('newRating').value),
+                barId: `PK-NEW-${nextId}` 
+            };
+
+            // Array.push() to add the new object
+            lawyers.push(newLawyer);
+            
+            // Re-render the updated list
+            applyFiltersAndRender(); 
+            
+            // Clear the form
+            e.target.reset();
+            alert(`Lawyer ${newLawyer.name} added successfully!`);
+        });
+
+        // Step 4: Implement Delete Functionality (D in CRUD)
+        function deleteLawyer(id) {
+            // Array.filter() to remove the object
+            lawyers = lawyers.filter(lawyer => lawyer.id !== id);
+            
+            // Re-render the updated list
+            applyFiltersAndRender();
+            alert(`Lawyer with ID ${id} deleted.`);
+        }
+
+        // Step 5: Implement Edit Functionality (U in CRUD)
+        const editModal = document.getElementById('editModal');
+        const modalContent = document.getElementById('modalContent');
+
+        function openEditModal(lawyer) {
+            document.getElementById('editId').value = lawyer.id;
+            document.getElementById('editName').value = lawyer.name;
+            document.getElementById('editSpecialty').value = lawyer.specialty;
+            document.getElementById('editCity').value = lawyer.city;
+            document.getElementById('editFee').value = lawyer.fee;
+            document.getElementById('editRating').value = lawyer.rating;
+
+            editModal.classList.remove('hidden');
+            // Simple transition effect for modal
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        }
+
+        function closeEditModal() {
+            modalContent.classList.add('scale-95', 'opacity-0');
+            // Hide the modal after transition completes
+            setTimeout(() => {
+                editModal.classList.add('hidden');
+            }, 300); 
+        }
+
+        document.getElementById('cancelEditBtn').addEventListener('click', closeEditModal);
+
+        document.getElementById('editLawyerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const idToUpdate = parseInt(document.getElementById('editId').value);
+            const lawyerIndex = lawyers.findIndex(l => l.id === idToUpdate);
+            
+            if (lawyerIndex > -1) {
+                // Modify the object's values in the array
+                lawyers[lawyerIndex].name = document.getElementById('editName').value.trim();
+                lawyers[lawyerIndex].specialty = document.getElementById('editSpecialty').value.trim();
+                lawyers[lawyerIndex].city = document.getElementById('editCity').value.trim();
+                lawyers[lawyerIndex].fee = parseInt(document.getElementById('editFee').value);
+                lawyers[lawyerIndex].rating = parseFloat(document.getElementById('editRating').value);
+                
+                // Re-render the updated cards
+                applyFiltersAndRender();
+                closeEditModal();
+                alert(`Lawyer ${lawyers[lawyerIndex].name} updated successfully!`);
+            }
+        });
+
+        // Attach event listeners for dynamically created buttons
+        function attachEventListeners() {
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    if (confirm(`Are you sure you want to delete lawyer ID ${id}?`)) {
+                        deleteLawyer(id);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    const lawyer = lawyers.find(l => l.id === id);
+                    if (lawyer) {
+                        openEditModal(lawyer);
+                    }
+                });
+            });
+        }
+
+        // Step 6: Implement Search Filters
+        const searchInput = document.getElementById('searchInput');
+        const cityFilter = document.getElementById('cityFilter');
+        const specialtyFilter = document.getElementById('specialtyFilter');
+        const ratingFilter = document.getElementById('ratingFilter');
+        const feeFilter = document.getElementById('feeFilter');
+
+        [searchInput, cityFilter, specialtyFilter, ratingFilter, feeFilter].forEach(element => {
+            element.addEventListener('input', applyFiltersAndRender);
+            element.addEventListener('change', applyFiltersAndRender); // Use change for selects
+        });
+
+        function applyFiltersAndRender() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedCity = cityFilter.value;
+            const selectedSpecialty = specialtyFilter.value;
+            const minRating = parseFloat(ratingFilter.value) || 0;
+            const feeRange = feeFilter.value;
+
+            let filteredList = lawyers.filter(lawyer => {
+                // Text Search Filter
+                const searchMatch = !searchTerm || 
+                                    lawyer.name.toLowerCase().includes(searchTerm) || 
+                                    lawyer.barId.toLowerCase().includes(searchTerm);
+
+                // City Filter
+                const cityMatch = !selectedCity || lawyer.city === selectedCity;
+
+                // Specialty Filter
+                const specialtyMatch = !selectedSpecialty || lawyer.specialty === selectedSpecialty;
+
+                // Rating Filter
+                const ratingMatch = lawyer.rating >= minRating;
+
+                // Fee Filter
+                let feeMatch = true;
+                if (feeRange === 'low') {
+                    feeMatch = lawyer.fee < 15000;
+                } else if (feeRange === 'high') {
+                    feeMatch = lawyer.fee > 20000;
+                }
+
+                return searchMatch && cityMatch && specialtyMatch && ratingMatch && feeMatch;
+            });
+
+            renderLawyerCards(filteredList);
+        }
+
+        // Initial load: This call renders the data when the script is loaded
+        applyFiltersAndRender();
+    </script> 
+</body>
+</html>
